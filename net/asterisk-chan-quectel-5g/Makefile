@@ -7,13 +7,13 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=asterisk-chan-quectel
+PKG_NAME:=asterisk-chan-quectel-5g
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/koreapyj/asterisk-chan-quectel.git
-PKG_SOURCE_VERSION:=7f11b26b6db94b5e7fad81e6d2812fbf237302b4
-PKG_SOURCE_DATE=2022-09-15
-PKG_RELEASE:=3.6
+PKG_SOURCE_URL:=https://github.com/koreapyj/asterisk-chan-quectel-5g.git
+PKG_SOURCE_VERSION:=e18317de8769300f83a9c0a8663c5a9d99c60936
+PKG_SOURCE_DATE=2022-09-16
+PKG_RELEASE:=0.1
 
 PKG_FIXUP:=autoreconf
 
@@ -31,20 +31,19 @@ endef
 MODULES_DIR:=/usr/lib/asterisk/modules
 
 include $(INCLUDE_DIR)/package.mk
-# asterisk-chan-quectel needs iconv
 include $(INCLUDE_DIR)/nls.mk
 
 define Package/$(PKG_NAME)
   SUBMENU:=Telephony
   SECTION:=net
   CATEGORY:=Network
-  URL:=https://github.com/koreapyj/asterisk-chan-quectel
+  URL:=https://github.com/koreapyj/asterisk-chan-quectel-5g
   DEPENDS:=asterisk $(ICONV_DEPENDS) +kmod-usb-acm +kmod-usb-serial +kmod-usb-serial-option +libusb-1.0 +alsa-lib
-  TITLE:=Quectel RM500Q module support
+  TITLE:=Quectel 5G modules support
 endef
 
 define Package/$(PKG_NAME)/description
- Asterisk channel driver for Quectel RM500Q module
+ Asterisk channel driver for Quectel 5G modules
 endef
 
 
@@ -65,13 +64,13 @@ CONFIGURE_VARS += \
 
 
 define Package/$(PKG_NAME)/conffiles
-	/etc/asterisk/quectel.conf
+	/etc/asterisk/quectel5g.conf
 endef
 
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc/asterisk
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/etc/quectel.conf $(1)/etc/asterisk
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/etc/quectel5g.conf $(1)/etc/asterisk
 	$(INSTALL_DIR) $(1)$(MODULES_DIR)
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/chan_quectel.so $(1)$(MODULES_DIR)
 endef
